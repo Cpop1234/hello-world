@@ -6,54 +6,64 @@
     <title>Login - DevOps Learning</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
             width: 100%;
             max-width: 400px;
             text-align: center;
+            color: white;
         }
         h1 {
-            color: #333;
             margin-bottom: 20px;
+            font-size: 24px;
         }
         input[type="text"], input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: none;
+            border-radius: 25px;
             font-size: 16px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            outline: none;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
         }
         button {
-            background: #28a745;
+            background: #ff7eb3;
             color: white;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             font-size: 18px;
             cursor: pointer;
             transition: 0.3s;
         }
         button:hover {
-            background: #218838;
+            background: #ff3b73;
         }
         .signup {
             margin-top: 15px;
         }
         .signup a {
-            color: #007bff;
+            color: #ff7eb3;
             text-decoration: none;
         }
         .signup a:hover {
@@ -64,7 +74,7 @@
 <body>
     <form action="login_action.jsp" method="post">
         <div class="container">
-            <h1>Login to DevOps Learning</h1>
+            <h1>Welcome Back!</h1>
             <input type="text" placeholder="Enter Email or Username" name="username" required>
             <input type="password" placeholder="Enter Password" name="password" required>
             <button type="submit">Login</button>
@@ -76,5 +86,3 @@
 </body>
 </html>
 
-
-             

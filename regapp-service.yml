@@ -3,13 +3,17 @@ kind: Service
 metadata:
   name: valaxy-service
   labels:
-    app: regapp 
+    app: regapp
+    app.kubernetes.io/name: regapp
+
 spec:
   selector:
-    app: regapp 
+    app: regapp
 
   ports:
-    - port: 8080
+    - protocol: TCP
+      port: 8080
       targetPort: 8080
+      nodePort: 30080  # Optional: only for NodePort services
 
-  type: LoadBalancer
+  type: LoadBalancer  # Change to NodePort if not using a cloud provider

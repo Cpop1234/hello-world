@@ -14,7 +14,7 @@
   <artifactId>webapp</artifactId>
   <packaging>war</packaging>
   <name>Webapp</name>
-  <description>Webapp using JSP & Servlets</description>
+  <description>Webapp using JSP &amp; Servlets</description>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>

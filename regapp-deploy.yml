@@ -1,12 +1,14 @@
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: valaxy-regapp
-  labels: 
-     app: regapp
+  labels:
+    app: regapp
+    app.kubernetes.io/name: regapp
+    app.kubernetes.io/instance: regapp-1
 
 spec:
-  replicas: 2 
+  replicas: 2
   selector:
     matchLabels:
       app: regapp
@@ -16,12 +18,21 @@ spec:
       labels:
         app: regapp
     spec:
+      restartPolicy: Always
       containers:
       - name: regapp
-        image: valaxy/regapp
+        image: valaxy/regapp:latest  # Consider specifying a version tag instead of 'latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
   strategy:
     type: RollingUpdate
     rollingUpdate:

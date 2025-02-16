@@ -75,7 +75,7 @@
     <form action="login_action.jsp" method="post">
         <div class="container">
             <h1>Welcome Dear Friend!</h1>
-            <input type="text" placeholder="Enter Email or Username" name="username" required>
+            <input type="text" placeholder="Enter Email " name="username" required>
             <input type="password" placeholder="Enter Password" name="password" required>
             <button type="submit">Login</button>
             <div class="signup">

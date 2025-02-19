@@ -1,40 +1,41 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: valaxy-regapp
-  labels:
-    app: regapp
-    app.kubernetes.io/name: regapp
-    app.kubernetes.io/instance: regapp-1
+- name: Deploy Web Application on Docker
+  hosts: docker
+  become: true
+  tasks:
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
 
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: regapp
+    - name: Create a deployment directory on Docker Server
+      file:
+        path: /home/ec2-user/deployment
+        state: directory
+        mode: '0755'
 
-  template:
-    metadata:
-      labels:
-        app: regapp
-    spec:
-      restartPolicy: Always
-      containers:
-      - name: regapp
-        image: valaxy/regapp:latest  # Consider specifying a version tag instead of 'latest'
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-        resources:
-          requests:
-            cpu: "250m"
-            memory: "256Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
+    - name: Copy the WAR file from Jenkins Server to Docker Server
+      copy:
+        src: /var/lib/jenkins/workspace/webapp/target/webapp.war
+        dest: /home/ec2-user/deployment/webapp.war
+        mode: '0644'
 
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
+    - name: Create a Dockerfile on Docker Server
+      copy:
+        dest: /home/ec2-user/deployment/Dockerfile
+        content: |
+          FROM tomcat:latest
+          COPY webapp.war /usr/local/tomcat/webapps/
+          EXPOSE 8080
+          CMD ["catalina.sh", "run"]
+
+    - name: Build Docker Image
+      command: docker build -t webapp-image /home/ec2-user/deployment
+
+    - name: Stop and Remove any existing container
+      command: docker rm -f webapp-container
+      ignore_errors: yes
+
+    - name: Run Docker Container
+      command: docker run -d -p 8080:8080 --name webapp-container webapp-image
+
